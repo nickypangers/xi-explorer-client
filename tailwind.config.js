@@ -5,7 +5,11 @@ module.exports = {
     container: {
       center: true,
     },
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#0ecc5f",
+      },
+    },
   },
   variants: {
     extend: {},

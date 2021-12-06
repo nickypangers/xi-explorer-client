@@ -3,6 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.nav-active {
+/* .nav-active {
     @apply bg-gray-300;
-}
+} */
