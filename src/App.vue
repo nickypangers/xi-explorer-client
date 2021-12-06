@@ -1,6 +1,10 @@
 <template>
   <nav-bar />
-  <router-view />
+  <div class="bg-primary">
+    <div class="container p-3 md:p-0">
+      <router-view />
+    </div>
+  </div>
 </template>
 
 <script>
