@@ -1,6 +1,7 @@
 <template>
   <div class="bg-primary h-screen">
     <div class="container h-full p-3 md:p-0">
+      <!-- Start Info Box Row -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <info-box title="Blocks" :data="1833">
           <template v-slot:image>
@@ -23,15 +24,21 @@
           </template>
         </info-box>
       </div>
+      <!-- End Info Box Row -->
+      <!-- Start Search Row -->
+      <search />
+      <!-- End Search Row -->
     </div>
   </div>
 </template>
 <script>
 import InfoBox from "@/components/InfoBox.vue";
+import Search from "@/components/Search.vue";
 export default {
   name: "Home",
   components: {
     InfoBox,
+    Search,
   },
 };
 </script>
