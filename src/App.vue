@@ -16,10 +16,16 @@ export default {
     NavBar,
   },
   setup() {
-    onMounted(() => {
+    const updateChainInfo = () => {
       store.dispatch("updateChainInfo");
+      console.info("Updated chain info");
+    };
+
+    onMounted(() => {
+      updateChainInfo();
+      // Update chain info every 1 minute
       setInterval(() => {
-        store.dispatch("updateChainInfo");
+        updateChainInfo();
       }, 1000 * 60);
     });
   },

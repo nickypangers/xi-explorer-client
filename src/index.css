@@ -18,5 +18,5 @@ html {
 }
 
 .link {
-    @apply text-action underline;
+    @apply text-action underline cursor-pointer;
 }
