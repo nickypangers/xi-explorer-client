@@ -7,10 +7,21 @@
 
 <script>
 import NavBar from "@/components/NavBar.vue";
+import { onMounted } from "vue";
+import { useStore } from "vuex";
+import store from "./store";
 export default {
   name: "App",
   components: {
     NavBar,
+  },
+  setup() {
+    onMounted(() => {
+      store.dispatch("updateChainInfo");
+      setInterval(() => {
+        store.dispatch("updateChainInfo");
+      }, 1000 * 60);
+    });
   },
 };
 </script>

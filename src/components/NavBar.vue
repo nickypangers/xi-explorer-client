@@ -1,6 +1,7 @@
 <template>
   <div class="w-full bg-dark text-white flex justify-between items-center">
-    <p class="ml-3">Logo</p>
+    <!-- <p class="ml-3">Logo</p> -->
+    <router-link to="/">Logo</router-link>
     <div class="hidden md:flex w-2/4 justify-between items-center">
       <router-link to="/">Home</router-link>
       <router-link to="/">Blocks</router-link>

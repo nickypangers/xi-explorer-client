@@ -51,7 +51,9 @@
             >
               <template v-slot:prefix>
                 <slot name="prefix">
-                  <a class="link" href="">Block {{ block.height }} </a>
+                  <a class="link" @click="goToBlock(block.height)"
+                    >Block {{ block.height }}
+                  </a>
                   <p class="timestamp">
                     {{ displayBlockTimeSinceNowString(block.timestamp) }} ago
                   </p>
@@ -96,7 +98,7 @@
         >
           <template v-slot:tile>
             <list-tile
-              v-for="transaction in lastestTransactions"
+              v-for="transaction in latestTransactions"
               :key="'list-' + transaction.hash"
             >
               <template v-slot:prefix>
@@ -133,7 +135,7 @@
                     <p>
                       To:
                       <span>
-                        <a class="link" href="">{{
+                        <a class="link" @click="log(transaction)">{{
                           shortenAddress(transaction.to)
                         }}</a>
                       </span>
@@ -158,8 +160,9 @@ import ListTable from "@/components/ListTable.vue";
 import ListTile from "@/components/ListTile.vue";
 import { shortenAddress, shortenHash } from "@/common/strings";
 import { displayBlockTimeSinceNowString } from "@/common/date";
-import axios from "axios";
 import { ref, onMounted, computed } from "vue";
+import { goToBlock, goToTransaction, goToAddress } from "@/common/router";
+import { useStore } from "vuex";
 export default {
   name: "Home",
   components: {
@@ -169,10 +172,11 @@ export default {
     ListTile,
   },
   setup() {
-    const latestBlock = ref({});
-    const walletCount = ref(0);
-    const blockList = ref([]);
-    const lastestTransactions = ref([]);
+    const store = useStore();
+    const latestBlock = computed(() => store.state.latestBlock);
+    const walletCount = computed(() => store.state.walletCount);
+    const blockList = computed(() => store.state.blockList);
+    const latestTransactions = computed(() => store.state.latestTransactions);
 
     const latestBlockTransactionCount = computed(() => {
       if (latestBlock.value.transactions === undefined) {
@@ -185,41 +189,17 @@ export default {
       console.log("View All");
     };
 
-    const getLatestBlockList = async () => {
-      const response = await axios.get("/blocks");
-      return response.data;
-    };
-
-    const getLatestTransactions = async () => {
-      const response = await axios.get("/transactions/limit/10");
-      return response.data;
-    };
-
-    const getWalletCount = async () => {
-      const response = await axios.get("/wallets/count");
-      return response.data;
-    };
-
     const totalBlockValue = (block) => {
       return block.transactions
         .map((transaction) => transaction.amount)
         .reduce((a, b) => a + b, 0);
     };
 
+    const log = (message) => {
+      console.log(message);
+    };
+
     onMounted(() => {
-      getWalletCount().then((data) => {
-        walletCount.value = data.count;
-      });
-
-      getLatestBlockList().then((data) => {
-        blockList.value = data.blocks;
-        latestBlock.value = data.blocks[0];
-      });
-
-      getLatestTransactions().then((data) => {
-        console.log(data);
-        lastestTransactions.value = data.transactions;
-      });
     });
 
     return {
@@ -230,9 +210,13 @@ export default {
       latestBlock,
       walletCount,
       blockList,
-      lastestTransactions,
+      latestTransactions,
       totalBlockValue,
       latestBlockTransactionCount,
+      log,
+      goToBlock,
+      goToTransaction,
+      goToAddress,
     };
   },
 };

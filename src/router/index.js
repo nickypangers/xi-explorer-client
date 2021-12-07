@@ -2,12 +2,23 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import NotFound from "@/views/NotFound.vue";
 import Address from "@/views/Address.vue";
+import Block from "@/views/Block.vue";
 
 const routes = [
   {
     path: "/",
     name: "home",
     component: Home,
+  },
+  {
+    path: "/block/:height",
+    name: "Block",
+    component: Block,
+  },
+  {
+    path: "/block/:height/transaction/:hash",
+    name: "Transaction",
+    component: Address,
   },
   {
     path: "/address/:address",
