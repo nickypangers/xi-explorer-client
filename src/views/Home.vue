@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <!-- Start Info Box Row -->
     <div class="pt-5">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -70,7 +69,7 @@
                     <p>
                       Miner:
                       <span>
-                        <a class="link" href="">{{
+                        <a class="link" @click="goToAddress(block.miner)">{{
                           shortenAddress(block.miner)
                         }}</a>
                       </span>
@@ -123,7 +122,7 @@
                     <p>
                       From:
                       <span>
-                        <a class="link" href="">
+                        <a class="link" @click="goToAddress(transaction.from)">
                           {{ shortenAddress(transaction.from) }}
                         </a>
                       </span>
@@ -131,7 +130,7 @@
                     <p>
                       To:
                       <span>
-                        <a class="link" @click="log(transaction)">{{
+                        <a class="link" @click="goToAddress(transaction.to)">{{
                           shortenAddress(transaction.to)
                         }}</a>
                       </span>
@@ -195,8 +194,7 @@ export default {
       console.log(message);
     };
 
-    onMounted(() => {
-    });
+    onMounted(() => {});
 
     return {
       viewAll,
