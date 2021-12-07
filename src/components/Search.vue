@@ -11,13 +11,13 @@
         v-model="query"
       />
       <button
-        class="bg-blue-400 h-full w-12 rounded-tr-md rounded-br-md"
+        class="bg-action h-full w-12 rounded-tr-md rounded-br-md"
         @click="search(query)"
       >
         <font-awesome-icon :icon="['fas', 'search']" />
       </button>
     </div>
-    <p class="p-1 text-red-600" v-if="isQueryEmpty">Please enter something</p>
+    <p class="p-1 text-alert" v-if="isQueryEmpty">Please enter something</p>
   </div>
 </template>
 <script>
@@ -71,3 +71,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+svg {
+  @apply text-white fill-current;
+}
+</style>

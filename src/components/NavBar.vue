@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-black text-white flex justify-between items-center">
+  <div class="w-full bg-dark text-white flex justify-between items-center">
     <p class="ml-3">Logo</p>
     <div class="hidden md:flex w-2/4 justify-between items-center">
       <router-link to="/">Home</router-link>

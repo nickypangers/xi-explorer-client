@@ -25,7 +25,7 @@
         </info-box>
         <info-box
           title="Last Block Transactions"
-          :data="latestBlock.transactions.length"
+          :data="latestBlockTransactionCount"
         >
           <template v-slot:image>
             <img src="/images/transaction.png" />
@@ -77,9 +77,9 @@
                         }}</a>
                       </span>
                     </p>
-                    <p class="">{{ block.transactions.length }} Txns</p>
+                    <p class="">{{ block.transactions.length }} Transactions</p>
                   </div>
-                  <p>{{ totalBlockValue(block).toFixed(2) }} XE</p>
+                  <p>{{ totalBlockValue(block).toFixed(2) }} XI</p>
                 </div>
               </template>
             </list-tile>
@@ -139,7 +139,7 @@
                       </span>
                     </p>
                   </div>
-                  <p>{{ transaction.amount }} XE</p>
+                  <p>{{ transaction.amount }} XI</p>
                 </div>
               </template>
             </list-tile>
@@ -159,7 +159,7 @@ import ListTile from "@/components/ListTile.vue";
 import { shortenAddress, shortenHash } from "@/common/strings";
 import { displayBlockTimeSinceNowString } from "@/common/date";
 import axios from "axios";
-import { reactive, ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 export default {
   name: "Home",
   components: {
@@ -174,6 +174,13 @@ export default {
     const blockList = ref([]);
     const lastestTransactions = ref([]);
 
+    const latestBlockTransactionCount = computed(() => {
+      if (latestBlock.value.transactions === undefined) {
+        return 0;
+      }
+      return latestBlock.value.transactions.length;
+    });
+
     const viewAll = () => {
       console.log("View All");
     };
@@ -184,7 +191,7 @@ export default {
     };
 
     const getLatestTransactions = async () => {
-      const response = await axios.get("/transactions/last10");
+      const response = await axios.get("/transactions/limit/10");
       return response.data;
     };
 
@@ -201,7 +208,6 @@ export default {
 
     onMounted(() => {
       getWalletCount().then((data) => {
-        console.log(data);
         walletCount.value = data.count;
       });
 
@@ -226,6 +232,7 @@ export default {
       blockList,
       lastestTransactions,
       totalBlockValue,
+      latestBlockTransactionCount,
     };
   },
 };

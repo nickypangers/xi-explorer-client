@@ -6,7 +6,7 @@
     </div>
     <div class="p-2">
       <button
-        class="w-full bg-blue-100 p-1 text-blue-400 text-sm rounded-lg"
+        class="w-full bg-blue-100 p-1 text-action text-sm rounded-lg"
         @click="viewAll"
       >
         {{ buttonText }}
