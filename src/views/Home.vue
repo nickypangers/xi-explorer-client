@@ -1,10 +1,6 @@
 <template>
   <div>
-    <!-- Start Search Row -->
-    <div class="pt-5">
-      <search />
-    </div>
-    <!-- End Search Row -->
+
     <!-- Start Info Box Row -->
     <div class="pt-5">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

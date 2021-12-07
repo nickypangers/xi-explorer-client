@@ -19,4 +19,21 @@ const getWalletCount = async () => {
   const response = await axios.get("/wallets/count");
   return response.data;
 };
-export { getBlock, getLatestBlockList, getLatestTransactions, getWalletCount };
+
+const totalBlockValue = (block) => {
+  if (block.transactions === null || block.transactions === undefined) {
+    return 0;
+  }
+
+  return block.transactions
+    .map((transaction) => transaction.amount)
+    .reduce((a, b) => a + b, 0);
+};
+
+export {
+  getBlock,
+  getLatestBlockList,
+  getLatestTransactions,
+  getWalletCount,
+  totalBlockValue,
+};
