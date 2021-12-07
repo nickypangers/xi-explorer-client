@@ -1,12 +1,24 @@
 <template>
-  <button class="w-full grid grid-cols-1 md:grid-cols-4 md:gap-3 p-2 text-left">
-    <div>
+  <div
+    class="
+      w-full
+      flex flex-col
+      md:flex-row
+      justify-start
+      md:justify-between
+      items-start
+      md:items-center
+      p-2
+      text-left
+    "
+  >
+    <div class="w-2/5 mr-3">
       <slot name="prefix"></slot>
     </div>
-    <div class="md:col-span-3 h-full">
+    <div class="w-full md:flex-grow">
       <slot name="body"></slot>
     </div>
-  </button>
+  </div>
 </template>
 <script>
 export default {

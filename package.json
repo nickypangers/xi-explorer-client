@@ -13,7 +13,8 @@
     "@tailwindcss/aspect-ratio": "^0.3.0",
     "axios": "^0.24.0",
     "vue": "^3.2.16",
-    "vue-router": "4"
+    "vue-router": "4",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.9.3",

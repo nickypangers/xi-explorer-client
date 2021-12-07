@@ -7,56 +7,139 @@
     <!-- End Search Row -->
     <!-- Start Info Box Row -->
     <div class="pt-5">
-      <info-box-row />
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <info-box title="Blocks" :data="latestBlock.height">
+          <template v-slot:image>
+            <img src="/images/block.png" />
+          </template>
+        </info-box>
+        <info-box title="Blocks / Hour (avg)" :data="60">
+          <template v-slot:image>
+            <img src="/images/timer.png" />
+          </template>
+        </info-box>
+        <info-box title="Active Wallets" :data="walletCount">
+          <template v-slot:image>
+            <img src="/images/wallet.png" />
+          </template>
+        </info-box>
+        <info-box
+          title="Last Block Transactions"
+          :data="latestBlock.transactions.length"
+        >
+          <template v-slot:image>
+            <img src="/images/transaction.png" />
+          </template>
+        </info-box>
+      </div>
     </div>
     <!-- End Info Box Row -->
     <!-- Start List Grid -->
-    <div class="pt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div class="pt-5 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Start Left List -->
       <div>
         <list-table
           title="Latest Blocks"
-          button-text="View All Block"
+          button-text="View All Blocks"
           @view-all="viewAll"
         >
           <template v-slot:tile>
-            <list-tile v-for="i in 10" :key="'list-' + i">
+            <list-tile
+              v-for="block in blockList"
+              :key="'list-' + block.height"
+              @click=""
+            >
               <template v-slot:prefix>
                 <slot name="prefix">
-                  <p>Test</p>
-                  <p>Test</p>
+                  <a class="link" href="">Block {{ block.height }} </a>
+                  <p class="timestamp">
+                    {{ displayBlockTimeSinceNowString(block.timestamp) }} ago
+                  </p>
                 </slot>
               </template>
               <template v-slot:body>
-                <div class="w-full h-full flex md:justify-between items-center">
-                  <p class="truncate w-full mr-3">
-                    Miner: xi_6d73A4821C224F34F3243d19404BC3dF8785410a
-                  </p>
-                  <p>Wow</p>
+                <div
+                  class="
+                    w-full
+                    h-full
+                    flex
+                    justify-between
+                    items-end
+                    md:items-center
+                  "
+                >
+                  <div>
+                    <p>
+                      Miner:
+                      <span>
+                        <a class="link" href="">{{
+                          shortenAddress(block.miner)
+                        }}</a>
+                      </span>
+                    </p>
+                    <p class="">{{ block.transactions.length }} Txns</p>
+                  </div>
+                  <p>{{ totalBlockValue(block).toFixed(2) }} XE</p>
                 </div>
               </template>
             </list-tile>
           </template>
         </list-table>
       </div>
+      <!-- End Left List -->
+      <!-- Start Right List -->
       <div>
         <list-table
-          title="Latest Blocks"
-          button-text="View All Block"
+          title="Latest Transactions"
+          button-text="View All Transactions"
           @view-all="viewAll"
         >
           <template v-slot:tile>
-            <list-tile v-for="i in 10" :key="'list-' + i">
+            <list-tile
+              v-for="transaction in lastestTransactions"
+              :key="'list-' + transaction.hash"
+            >
               <template v-slot:prefix>
                 <slot name="prefix">
-                  <p>Test</p>
+                  <a class="link" href="">
+                    {{ shortenHash(transaction.hash) }}
+                  </a>
+                  <p class="timestamp">
+                    {{ displayBlockTimeSinceNowString(transaction.timestamp) }}
+                    ago
+                  </p>
                 </slot>
               </template>
               <template v-slot:body>
-                <div class="w-full flex md:justify-between">
-                  <p class="truncate w-full mr-3">
-                    Miner: xi_6d73A4821C224F34F3243d19404BC3dF8785410a
-                  </p>
-                  <p>Wow</p>
+                <div
+                  class="
+                    w-full
+                    h-full
+                    flex
+                    justify-between
+                    items-end
+                    md:items-center
+                  "
+                >
+                  <div>
+                    <p>
+                      From:
+                      <span>
+                        <a class="link" href="">
+                          {{ shortenAddress(transaction.from) }}
+                        </a>
+                      </span>
+                    </p>
+                    <p>
+                      To:
+                      <span>
+                        <a class="link" href="">{{
+                          shortenAddress(transaction.to)
+                        }}</a>
+                      </span>
+                    </p>
+                  </div>
+                  <p>{{ transaction.amount }} XE</p>
                 </div>
               </template>
             </list-tile>
@@ -64,30 +147,91 @@
         </list-table>
       </div>
     </div>
-
+    <!-- End Right List -->
     <!-- End List Grid -->
   </div>
 </template>
 <script>
-import InfoBoxRow from "@/components/InfoBoxRow.vue";
+import InfoBox from "@/components/InfoBox.vue";
 import Search from "@/components/Search.vue";
 import ListTable from "@/components/ListTable.vue";
 import ListTile from "@/components/ListTile.vue";
+import { shortenAddress, shortenHash } from "@/common/strings";
+import { displayBlockTimeSinceNowString } from "@/common/date";
+import axios from "axios";
+import { reactive, ref, onMounted } from "vue";
 export default {
   name: "Home",
   components: {
-    InfoBoxRow,
+    InfoBox,
     Search,
     ListTable,
     ListTile,
   },
   setup() {
+    const latestBlock = ref({});
+    const walletCount = ref(0);
+    const blockList = ref([]);
+    const lastestTransactions = ref([]);
+
     const viewAll = () => {
       console.log("View All");
     };
+
+    const getLatestBlockList = async () => {
+      const response = await axios.get("/blocks");
+      return response.data;
+    };
+
+    const getLatestTransactions = async () => {
+      const response = await axios.get("/transactions/last10");
+      return response.data;
+    };
+
+    const getWalletCount = async () => {
+      const response = await axios.get("/wallets/count");
+      return response.data;
+    };
+
+    const totalBlockValue = (block) => {
+      return block.transactions
+        .map((transaction) => transaction.amount)
+        .reduce((a, b) => a + b, 0);
+    };
+
+    onMounted(() => {
+      getWalletCount().then((data) => {
+        console.log(data);
+        walletCount.value = data.count;
+      });
+
+      getLatestBlockList().then((data) => {
+        blockList.value = data.blocks;
+        latestBlock.value = data.blocks[0];
+      });
+
+      getLatestTransactions().then((data) => {
+        console.log(data);
+        lastestTransactions.value = data.transactions;
+      });
+    });
+
     return {
       viewAll,
+      shortenAddress,
+      shortenHash,
+      displayBlockTimeSinceNowString,
+      latestBlock,
+      walletCount,
+      blockList,
+      lastestTransactions,
+      totalBlockValue,
     };
   },
 };
 </script>
+<style scoped>
+.timestamp {
+  @apply text-gray-500 text-sm;
+}
+</style>

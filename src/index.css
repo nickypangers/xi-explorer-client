@@ -6,3 +6,7 @@
 /* .nav-active {
     @apply bg-gray-300;
 } */
+
+.link {
+    @apply text-blue-300 underline;
+}
