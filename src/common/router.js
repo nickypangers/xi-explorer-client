@@ -2,7 +2,7 @@ import router from "@/router";
 
 const goToBlock = (height) => {
   router.push({
-    name: "Block",
+    name: "BlockOverview",
     params: {
       height,
     },
@@ -11,7 +11,7 @@ const goToBlock = (height) => {
 
 const goToTransaction = (height, hash) => {
   router.push({
-    name: "Transaction",
+    name: "TransactionOverview",
     params: {
       height,
       hash,
@@ -21,7 +21,7 @@ const goToTransaction = (height, hash) => {
 
 const goToAddress = (address) => {
   router.push({
-    name: "Address",
+    name: "AddressOverview",
     params: {
       address,
     },

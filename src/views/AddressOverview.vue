@@ -30,20 +30,12 @@ export default {
   setup() {
     const route = useRoute();
     const addressInfo = ref({});
+
     const address = computed(() => route.params.address);
-
-    const balance = computed(() => {
-      if (
-        addressInfo.value.balance === null ||
-        address.value.balance === undefined
-      ) {
-        return 0;
-      }
-      return addressInfo.value.balance;
-    });
-
-    const transactionList = computed(() => address.value.transactionList ?? []);
-
+    const balance = computed(() => addressInfo.value.balance ?? 0);
+    const transactionList = computed(
+      () => addressInfo.value.transactionList ?? []
+    );
     const nonce = computed(() => addressInfo.value.nonce ?? 0);
 
     const clearAddressData = () => {

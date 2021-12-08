@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import NotFound from "@/views/NotFound.vue";
-import Address from "@/views/Address.vue";
-import Block from "@/views/Block.vue";
-import Transaction from "@/views/Transaction.vue";
+import AddressOverview from "@/views/AddressOverview.vue";
+import BlockOverview from "@/views/BlockOverview.vue";
+import TransactionOverview from "@/views/TransactionOverview.vue";
 
 const routes = [
   {
@@ -13,18 +13,18 @@ const routes = [
   },
   {
     path: "/block/:height",
-    name: "Block",
-    component: Block,
+    name: "BlockOverview",
+    component: BlockOverview,
   },
   {
     path: "/block/:height/transaction/:hash",
-    name: "Transaction",
-    component: Transaction,
+    name: "TransactionOverview",
+    component: TransactionOverview,
   },
   {
     path: "/address/:address",
-    name: "Address",
-    component: Address,
+    name: "AddressOverview",
+    component: AddressOverview,
   },
   {
     path: "/404",

@@ -22,10 +22,15 @@
         @link-click="goToAddress(to)"
         :is-link="true"
       />
+      <overview-tile title="Memo" :content="memo" />
       <overview-tile title="Amount" :content="`${amount} XI`" />
     </div>
-    <div>test</div>
-    <div class="md:col-span-2">test</div>
+    <div>
+      <p class="mb-2">Raw Data</p>
+      <div class="w-full rounded bg-white text-sm p-3 break-words">
+        <pre class="whitespace-pre-wrap">{{ transaction }}</pre>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -48,6 +53,7 @@ export default {
     const from = computed(() => transaction.value.from ?? "");
     const to = computed(() => transaction.value.to ?? "");
     const amount = computed(() => transaction.value.amount ?? 0);
+    const memo = computed(() => transaction.value.memo ?? "");
     const timestamp = computed(() =>
       transaction.value.timestamp
         ? timestampToDate(transaction.value.timestamp)
@@ -68,6 +74,7 @@ export default {
       transaction,
       from,
       to,
+      memo,
       amount,
       timestamp,
       goToBlock,
