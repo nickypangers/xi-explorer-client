@@ -36,7 +36,7 @@
         <list-table
           title="Latest Blocks"
           button-text="View All Blocks"
-          @view-all="viewAll"
+          @view-all="router.push('/blocks')"
         >
           <template v-slot:tile>
             <list-tile
@@ -89,7 +89,6 @@
         <list-table
           title="Latest Transactions"
           button-text="View All Transactions"
-          @view-all="viewAll"
         >
           <template v-slot:tile>
             <list-tile
@@ -163,6 +162,7 @@ import { displayBlockTimeSinceNowString } from "@/common/date";
 import { ref, onMounted, computed } from "vue";
 import { goToBlock, goToTransaction, goToAddress } from "@/common/router";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 export default {
   name: "Home",
   components: {
@@ -173,6 +173,7 @@ export default {
   },
   setup() {
     const store = useStore();
+    const router = useRouter();
     const latestBlock = computed(() => store.state.latestBlock);
     const walletCount = computed(() => store.state.walletCount);
     const blockList = computed(() => store.state.blockList);
@@ -184,10 +185,6 @@ export default {
       }
       return latestBlock.value.transactions.length;
     });
-
-    const viewAll = () => {
-      console.log("View All");
-    };
 
     const totalBlockValue = (block) => {
       return block.transactions
@@ -202,7 +199,6 @@ export default {
     onMounted(() => {});
 
     return {
-      viewAll,
       shortenAddress,
       shortenHash,
       displayBlockTimeSinceNowString,
@@ -216,6 +212,7 @@ export default {
       goToBlock,
       goToTransaction,
       goToAddress,
+      router,
     };
   },
 };

@@ -5,8 +5,8 @@
     <div class="hidden md:flex w-2/4 justify-between items-center">
       <router-link to="/">Home</router-link>
       <router-link to="/blocks">Blocks</router-link>
-      <router-link to="/">Transactions</router-link>
-      <router-link to="/">Wallets</router-link>
+      <router-link to="/transactions">Transactions</router-link>
+      <router-link to="/wallets">Wallets</router-link>
     </div>
     <div class="block md:hidden p-3">
       <button>Menu</button>

@@ -3,7 +3,9 @@ import Home from "@/views/Home.vue";
 import NotFound from "@/views/NotFound.vue";
 import Blocks from "@/views/Blocks.vue";
 import BlockOverview from "@/views/BlockOverview.vue";
+import Wallets from "@/views/Wallets.vue";
 import WalletOverview from "@/views/WalletOverview.vue";
+import Transactions from "@/views/Transactions.vue";
 import TransactionOverview from "@/views/TransactionOverview.vue";
 
 const routes = [
@@ -11,6 +13,21 @@ const routes = [
     path: "/",
     name: "home",
     component: Home,
+  },
+  {
+    path: "/blocks",
+    name: "Blocks",
+    component: Blocks,
+  },
+  {
+    path: "/transactions",
+    name: "Transactions",
+    component: Transactions,
+  },
+  {
+    path: "/wallets",
+    name: "Wallets",
+    component: Wallets,
   },
   {
     path: "/blocks",

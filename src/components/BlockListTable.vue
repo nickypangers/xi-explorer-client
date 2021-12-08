@@ -1,6 +1,6 @@
 <template>
   <table class="table-fixed w-full bg-white rounded">
-    <thead class="hidden md:table-header-group">
+    <thead class="hidden md:table-header-group bg-gray-200">
       <tr>
         <th>Height</th>
         <th>Block Hash</th>
