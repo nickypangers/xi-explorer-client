@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <p class="mb-2">Block Transactions</p>
+    <p class="mb-2">{{ title }}</p>
     <table class="table-fixed w-full">
       <thead class="hidden md:table-header-group">
         <tr>
@@ -14,8 +14,14 @@
       </thead>
       <tbody>
         <tr v-for="transaction in list">
-          <td title="Tx Hash:">{{ transaction.hash }}</td>
-          <td title="Timestamp:">
+          <td title="Tx Hash:">
+            <a
+              class="link"
+              @click="goToTransaction(transaction.block, transaction.hash)"
+              >{{ transaction.hash }}</a
+            >
+          </td>
+          <td title="Date:">
             {{ timestampToDate(transaction.timestamp) }}
           </td>
           <td title="From:">
@@ -37,27 +43,32 @@
 </template>
 <script>
 import { timestampToDate } from "@/common/date";
-import { goToAddress } from "@/common/router";
+import { goToAddress, goToTransaction } from "@/common/router";
 import { onMounted } from "vue";
-import { useRoute } from "vue-router";
+// import { useRoute } from "vue-router";
 export default {
   name: "BlockTransactionsTable",
   props: {
+    title: {
+      type: String,
+      default: "",
+    },
     list: {
       type: Array,
       default: () => [],
     },
   },
-  setup() {
-    const route = useRoute();
+  setup(props) {
+    // const route = useRoute();
 
     onMounted(() => {
-      console.debug("table", route.params);
+      // console.debug("table", props.list.value);
     });
 
     return {
       timestampToDate,
       goToAddress,
+      goToTransaction,
     };
   },
 };

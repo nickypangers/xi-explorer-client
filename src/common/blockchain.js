@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const getBlock = async (height) => {
+const getBlockInfo = async (height) => {
   const response = await axios.get(`/block/${height}`);
   return response.data;
 };
@@ -20,6 +20,18 @@ const getWalletCount = async () => {
   return response.data;
 };
 
+const getAddressInfo = async (address) => {
+  const response = await axios.get(`/wallet/${address}`);
+  return response.data;
+};
+
+const getTransactionInfo = async (block, transactionHash) => {
+  const response = await axios.get(
+    `/block/${block}/transaction/${transactionHash}`
+  );
+  return response.data;
+};
+
 const totalBlockValue = (block) => {
   if (block.transactions === null || block.transactions === undefined) {
     return 0;
@@ -31,9 +43,11 @@ const totalBlockValue = (block) => {
 };
 
 export {
-  getBlock,
+  getBlockInfo,
   getLatestBlockList,
   getLatestTransactions,
   getWalletCount,
   totalBlockValue,
+  getAddressInfo,
+  getTransactionInfo,
 };

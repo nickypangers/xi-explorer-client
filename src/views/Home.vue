@@ -98,7 +98,12 @@
             >
               <template v-slot:prefix>
                 <slot name="prefix">
-                  <a class="link" href="">
+                  <a
+                    class="link"
+                    @click="
+                      goToTransaction(transaction.block, transaction.hash)
+                    "
+                  >
                     {{ shortenHash(transaction.hash) }}
                   </a>
                   <p class="timestamp">

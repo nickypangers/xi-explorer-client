@@ -3,6 +3,7 @@ import Home from "@/views/Home.vue";
 import NotFound from "@/views/NotFound.vue";
 import Address from "@/views/Address.vue";
 import Block from "@/views/Block.vue";
+import Transaction from "@/views/Transaction.vue";
 
 const routes = [
   {
@@ -18,7 +19,7 @@ const routes = [
   {
     path: "/block/:height/transaction/:hash",
     name: "Transaction",
-    component: Address,
+    component: Transaction,
   },
   {
     path: "/address/:address",
