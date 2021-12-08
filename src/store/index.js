@@ -45,7 +45,7 @@ const store = createStore({
 
         commit("setWalletCount", data.count);
       });
-      getLatestTransactions().then((data) => {
+      getLatestTransactions(10).then((data) => {
         // console.debug("transactions", data.transactions);
         commit("setLatestTransactions", data.transactions);
       });

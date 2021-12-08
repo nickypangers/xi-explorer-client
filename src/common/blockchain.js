@@ -10,8 +10,8 @@ const getLatestBlockList = async () => {
   return response.data;
 };
 
-const getLatestTransactions = async () => {
-  const response = await axios.get("/transactions/limit/10");
+const getLatestTransactions = async (limit = 0) => {
+  const response = await axios.get(`/transactions/limit/${limit}`);
   return response.data;
 };
 
@@ -42,6 +42,11 @@ const totalBlockValue = (block) => {
     .reduce((a, b) => a + b, 0);
 };
 
+const getWalletAtPage = async (page, limit) => {
+  const response = await axios.post("/wallets", { page, limit });
+  return response.data;
+};
+
 export {
   getBlockInfo,
   getLatestBlockList,
@@ -50,4 +55,5 @@ export {
   totalBlockValue,
   getAddressInfo,
   getTransactionInfo,
+  getWalletAtPage,
 };

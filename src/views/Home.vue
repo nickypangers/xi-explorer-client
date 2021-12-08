@@ -89,6 +89,7 @@
         <list-table
           title="Latest Transactions"
           button-text="View All Transactions"
+          @view-all="router.push('/transactions')"
         >
           <template v-slot:tile>
             <list-tile
