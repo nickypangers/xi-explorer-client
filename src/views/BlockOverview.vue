@@ -3,7 +3,7 @@
     <!-- Start Block Overview -->
     <div>
       <p class="mb-2">Block Overview</p>
-      <overview-tile title="Block Height" :content="blockHeight" />
+      <overview-tile title="Block" :content="blockHeight" />
       <overview-tile
         title="Timestamp"
         :content="`${timestampToDate(block.timestamp)}`"

@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import NotFound from "@/views/NotFound.vue";
-import WalletOverview from "@/views/WalletOverview.vue";
+import Blocks from "@/views/Blocks.vue";
 import BlockOverview from "@/views/BlockOverview.vue";
+import WalletOverview from "@/views/WalletOverview.vue";
 import TransactionOverview from "@/views/TransactionOverview.vue";
 
 const routes = [
@@ -10,6 +11,11 @@ const routes = [
     path: "/",
     name: "home",
     component: Home,
+  },
+  {
+    path: "/blocks",
+    name: "Blocks",
+    component: Blocks,
   },
   {
     path: "/block/:height",

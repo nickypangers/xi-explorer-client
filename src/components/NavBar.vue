@@ -4,7 +4,7 @@
     <router-link to="/">Logo</router-link>
     <div class="hidden md:flex w-2/4 justify-between items-center">
       <router-link to="/">Home</router-link>
-      <router-link to="/">Blocks</router-link>
+      <router-link to="/blocks">Blocks</router-link>
       <router-link to="/">Transactions</router-link>
       <router-link to="/">Wallets</router-link>
     </div>
