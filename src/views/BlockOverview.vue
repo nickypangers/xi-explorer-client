@@ -49,7 +49,7 @@ import OverviewTile from "@/components/OverviewTile.vue";
 import TransactionsTable from "@/components/TransactionsTable.vue";
 import { timestampToDate } from "@/common/date";
 export default {
-  name: "Block",
+  name: "BlockOverview",
   components: {
     OverviewTile,
     TransactionsTable,

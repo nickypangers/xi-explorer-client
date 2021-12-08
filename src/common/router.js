@@ -21,7 +21,7 @@ const goToTransaction = (height, hash) => {
 
 const goToAddress = (address) => {
   router.push({
-    name: "AddressOverview",
+    name: "WalletOverview",
     params: {
       address,
     },

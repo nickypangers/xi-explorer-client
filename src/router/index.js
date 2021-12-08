@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import NotFound from "@/views/NotFound.vue";
-import AddressOverview from "@/views/AddressOverview.vue";
+import WalletOverview from "@/views/WalletOverview.vue";
 import BlockOverview from "@/views/BlockOverview.vue";
 import TransactionOverview from "@/views/TransactionOverview.vue";
 
@@ -23,8 +23,8 @@ const routes = [
   },
   {
     path: "/address/:address",
-    name: "AddressOverview",
-    component: AddressOverview,
+    name: "WalletOverview",
+    component: WalletOverview,
   },
   {
     path: "/404",

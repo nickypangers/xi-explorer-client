@@ -41,7 +41,7 @@ import { getTransactionInfo } from "@/common/blockchain";
 import { timestampToDate } from "@/common/date";
 import { goToBlock, goToAddress } from "@/common/router";
 export default {
-  name: "Transaction",
+  name: "TransactionOverview",
   components: {
     OverviewTile,
   },
