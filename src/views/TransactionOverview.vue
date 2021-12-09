@@ -37,7 +37,7 @@
 import { useRoute } from "vue-router";
 import OverviewTile from "@/components/OverviewTile.vue";
 import { ref, computed, onMounted } from "vue";
-import { getTransactionInfo } from "@/common/blockchain";
+import { getTransactionInfo } from "@/common/api";
 import { timestampToDate } from "@/common/date";
 import { goToBlock, goToAddress } from "@/common/router";
 export default {

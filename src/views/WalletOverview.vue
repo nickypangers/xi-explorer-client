@@ -19,7 +19,7 @@
 import { useRoute } from "vue-router";
 import OverviewTile from "@/components/OverviewTile.vue";
 import { ref, onMounted, computed, watch } from "vue";
-import { getAddressInfo } from "@/common/blockchain";
+import { getAddressInfo } from "@/common/api";
 import TransactionsTable from "@/components/TransactionsTable.vue";
 export default {
   name: "WalletOverview",

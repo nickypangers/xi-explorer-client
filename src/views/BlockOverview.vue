@@ -41,7 +41,7 @@
 <script>
 import { useRoute } from "vue-router";
 import { ref, onMounted, computed, watch } from "vue";
-import { getBlockInfo } from "@/common/blockchain";
+import { getBlockInfo } from "@/common/api";
 import { useStore } from "vuex";
 import { totalBlockValue } from "@/common/blockchain";
 import { goToBlock, goToAddress, goToTransaction } from "@/common/router";

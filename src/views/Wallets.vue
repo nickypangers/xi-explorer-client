@@ -1,4 +1,3 @@
-
 <template>
   <div class="w-full">
     <p class="mb-2">Active Accounts</p>
@@ -17,7 +16,7 @@
 import WalletListTable from "@/components/WalletListTable.vue";
 import { ref, onMounted, computed, watch } from "vue";
 import { useStore } from "vuex";
-import { getWalletAtPage } from "@/common/blockchain";
+import { getWalletAtPage } from "@/common/api";
 export default {
   name: "Wallets",
   components: {

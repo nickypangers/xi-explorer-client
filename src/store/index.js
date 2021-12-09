@@ -4,7 +4,7 @@ import {
   getLatestTransactions,
   getWalletCount,
   getCirculatingSupply,
-} from "@/common/blockchain";
+} from "@/common/api";
 
 const store = createStore({
   state() {
