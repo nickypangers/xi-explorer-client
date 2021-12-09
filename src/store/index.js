@@ -3,6 +3,7 @@ import {
   getLatestBlockList,
   getLatestTransactions,
   getWalletCount,
+  getCirculatingSupply,
 } from "@/common/blockchain";
 
 const store = createStore({
@@ -12,6 +13,7 @@ const store = createStore({
       walletCount: 0,
       blockList: [],
       latestTransactions: [],
+      circulatingSupply: 0,
     };
   },
   getters: {
@@ -32,6 +34,9 @@ const store = createStore({
     setLatestTransactions(state, transactions) {
       state.latestTransactions = transactions;
     },
+    setCirculatingSupply(state, supply) {
+      state.circulatingSupply = supply;
+    },
   },
   actions: {
     updateChainInfo({ commit }) {
@@ -48,6 +53,10 @@ const store = createStore({
       getLatestTransactions(10).then((data) => {
         // console.debug("transactions", data.transactions);
         commit("setLatestTransactions", data.transactions);
+      });
+      getCirculatingSupply().then((data) => {
+        // console.debug("supply", data.supply);
+        commit("setCirculatingSupply", data.supply);
       });
     },
   },

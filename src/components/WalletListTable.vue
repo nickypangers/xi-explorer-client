@@ -4,6 +4,7 @@
       <tr>
         <th>Address</th>
         <th>Balance</th>
+        <th>Percentage</th>
       </tr>
     </thead>
     <tbody>
@@ -14,11 +15,14 @@
           }}</a>
         </td>
         <td title="Balance:">{{ wallet.balance }} XI</td>
+        <td title="Percentage:">{{ getPercentage(wallet.balance) }} XI</td>
       </tr>
     </tbody>
   </table>
 </template>
 <script>
+import { useStore } from "vuex";
+import { computed } from "vue";
 export default {
   name: "WalletListTable",
   props: {
@@ -27,7 +31,19 @@ export default {
       default: () => [],
     },
   },
-  setup() {},
+  setup() {
+    const store = useStore();
+    const circulatingSupply = computed(() => store.state.circulatingSupply);
+
+    const getPercentage = (balance) => {
+      const percentage = ((balance / circulatingSupply.value) * 100).toFixed(8);
+      return `${percentage}%`;
+    };
+
+    return {
+      getPercentage,
+    };
+  },
 };
 </script>
 <style scoped>

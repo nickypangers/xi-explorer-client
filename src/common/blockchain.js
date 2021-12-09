@@ -47,6 +47,11 @@ const getWalletAtPage = async (page, limit) => {
   return response.data;
 };
 
+const getCirculatingSupply = async () => {
+  const response = await axios.get("/supply");
+  return response.data;
+};
+
 export {
   getBlockInfo,
   getLatestBlockList,
@@ -56,4 +61,5 @@ export {
   getAddressInfo,
   getTransactionInfo,
   getWalletAtPage,
+  getCirculatingSupply,
 };
