@@ -31,7 +31,7 @@
         :content="block.miner"
         :is-link="true"
         :has-data="hasData"
-        @link-click="goToAddress(miner)"
+        @link-click="goToAddress(block.miner)"
       />
       <overview-tile
         title="Total XI"
@@ -46,10 +46,7 @@
     <div class="md:col-span-2">
       <p class="mb-2">Block Transactions</p>
 
-      <transactions-table
-        :list="block.transactions"
-        v-if="hasData"
-      />
+      <transactions-table :list="block.transactions" v-if="hasData" />
       <div v-if="!hasData" class="h-96 w-full">
         <text-loading-pulse />
       </div>
@@ -82,9 +79,6 @@ export default {
     const hasData = ref(false);
     const timestamp = computed(() => block.timestamp ?? 0);
     const blockHeight = computed(() => route.params.height);
-    const hash = computed(() => block.hash);
-    const parentHash = computed(() => block.parentHash);
-    const miner = computed(() => block.miner ?? "");
     const latestBlockHeight = computed(() => {
       return store.getters.latestBlockHeight;
     });
@@ -139,9 +133,6 @@ export default {
       timestampToDate,
       hasData,
       timestamp,
-      hash,
-      parentHash,
-      miner,
       hasData,
     };
   },

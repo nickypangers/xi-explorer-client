@@ -44,7 +44,6 @@
 import { timestampToDate } from "@/common/date";
 import { goToAddress, goToTransaction } from "@/common/router";
 import { onMounted } from "vue";
-// import { useRoute } from "vue-router";
 export default {
   name: "BlockTransactionsTable",
   props: {
@@ -54,11 +53,7 @@ export default {
     },
   },
   setup(props) {
-    // const route = useRoute();
-
-    onMounted(() => {
-      // console.debug("table", props.list.value);
-    });
+    onMounted(() => {});
 
     return {
       timestampToDate,
