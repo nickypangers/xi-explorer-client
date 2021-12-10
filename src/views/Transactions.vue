@@ -1,7 +1,10 @@
 <template>
   <div class="w-full">
     <p class="mb-2">Last 10 Blocks Transactions</p>
-    <transaction-list-table :list="transactionList" />
+    <transaction-list-table :list="transactionList" v-if="hasData" />
+    <div v-if="!hasData">
+      <p class="text-center">Loading Data</p>
+    </div>
   </div>
 </template>
 <script>
@@ -15,15 +18,23 @@ export default {
   },
   setup() {
     const transactionList = ref([]);
+    const hasData = ref(false);
 
-    onMounted(() => {
+    const getLatestTransactionData = () => {
+      hasData.value = false;
       getLatestTransactions().then((data) => {
         transactionList.value = data.transactions;
+        hasData.value = true;
       });
+    }
+
+    onMounted(() => {
+      getLatestTransactionData();
     });
 
     return {
       transactionList,
+      hasData
     };
   },
 };
