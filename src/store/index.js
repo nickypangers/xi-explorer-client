@@ -14,6 +14,8 @@ const store = createStore({
       blockList: [],
       latestTransactions: [],
       circulatingSupply: 0,
+      searchHasError: false,
+      searchErrorMessage: "",
     };
   },
   getters: {
@@ -37,6 +39,12 @@ const store = createStore({
     setCirculatingSupply(state, supply) {
       state.circulatingSupply = supply;
     },
+    setSearchHasError(state, hasError) {
+      state.searchHasError = hasError;
+    },
+    setSearchErrorMessage(state, message) {
+      state.searchErrorMessage = message;
+    },
   },
   actions: {
     updateChainInfo({ commit }) {
@@ -58,6 +66,14 @@ const store = createStore({
         // console.debug("supply", data.supply);
         commit("setCirculatingSupply", data.supply);
       });
+    },
+    setSearchErrorMessage({ commit }, message) {
+      commit("setSearchErrorMessage", message);
+      commit("setSearchHasError", true);
+    },
+    clearSearchErrorMessage({ commit }) {
+      commit("setSearchErrorMessage", "");
+      commit("setSearchHasError", false);
     },
   },
 });

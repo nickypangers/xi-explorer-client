@@ -1,9 +1,22 @@
 import axios from "axios";
+import store from "@/store";
+import { goToHome } from "@/common/router";
 
 // Block
 const getBlockInfo = async (height) => {
-  const response = await axios.get(`/block/${height}`);
-  return response.data;
+  return axios
+    .get(`/block/${height}`)
+    .then((response) => {
+      store.dispatch("clearSearchErrorMessage");
+      response.data;
+    })
+    .catch(() => {
+      store.dispatch(
+        "setSearchErrorMessage",
+        "Please enter valid address, transaction or Block ID."
+      );
+      goToHome();
+    });
 };
 
 const getLatestBlockList = async () => {
@@ -18,11 +31,22 @@ const getLatestTransactions = async (limit = 0) => {
 };
 
 const getTransactionInfo = async (block, transactionHash) => {
-  const response = await axios.post(`/transaction`, {
-    height: block,
-    hash: transactionHash,
-  });
-  return response.data;
+  return axios
+    .post(`/transaction`, {
+      height: block,
+      hash: transactionHash,
+    })
+    .then((response) => {
+      store.dispatch("clearSearchErrorMessage");
+      response.data;
+    })
+    .catch(() => {
+      store.dispatch(
+        "setSearchErrorMessage",
+        "Please enter valid address, transaction or Block ID."
+      );
+      goToHome();
+    });
 };
 
 // Wallet
@@ -37,8 +61,19 @@ const getWalletAtPage = async (page, limit) => {
 };
 
 const getAddressInfo = async (address) => {
-  const response = await axios.post(`/wallet/`, { address });
-  return response.data;
+  return axios
+    .post(`/wallet/`, { address })
+    .then((response) => {
+      store.dispatch("clearSearchErrorMessage");
+      response.data;
+    })
+    .catch(() => {
+      store.dispatch(
+        "setSearchErrorMessage",
+        "Please enter valid address, transaction or Block ID."
+      );
+      goToHome();
+    });
 };
 
 const getWalletCount = async () => {

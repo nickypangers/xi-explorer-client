@@ -1,5 +1,11 @@
 import router from "@/router";
 
+const goToHome = () => {
+  router.push({
+    name: "Home",
+  });
+};
+
 const goToBlock = (height) => {
   router.push({
     name: "BlockOverview",
@@ -28,4 +34,4 @@ const goToAddress = (address) => {
   });
 };
 
-export { goToBlock, goToTransaction, goToAddress };
+export { goToHome, goToBlock, goToTransaction, goToAddress };

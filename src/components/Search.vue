@@ -17,28 +17,42 @@
         <font-awesome-icon :icon="['fas', 'search']" />
       </button>
     </form>
-    <p class="p-1 text-alert" v-if="isQueryEmpty">Please enter something</p>
+    <p class="p-1 text-alert" v-if="hasError">{{ errorMessage }}</p>
   </div>
 </template>
 <script>
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
 export default {
   name: "Search",
   setup() {
     const router = useRouter();
+    const store = useStore();
     const query = ref("");
-    const isQueryEmpty = ref(false);
+    const hasError = computed(() => store.state.searchHasError);
+    const errorMessage = computed(() => store.state.searchErrorMessage);
+
+    const latestBlockHeight = computed(() => store.state.latestBlock.height);
+
+    const setHasError = (msg) => {
+      store.dispatch("setSearchErrorMessage", msg);
+    };
+
+    const setNoError = () => {
+      store.dispatch("clearSearchErrorMessage");
+    };
 
     const search = (query) => {
+      setNoError();
       if (!query) {
         console.debug("search", "search is empty");
-        isQueryEmpty.value = true;
+        setHasError("Please enter something");
         return;
       }
       if (query.includes("xi_")) {
         router.push({
-          name: "Address",
+          name: "WalletOverview",
           params: {
             address: query,
           },
@@ -47,26 +61,29 @@ export default {
       }
       if (query.length === 64) {
         router.push({
-          name: "Transaction",
+          name: "TransactionOverview",
           params: {
             hash: query,
           },
         });
         return;
       }
-
-      router.push({
-        name: "Block",
-        params: {
-          height: query,
-        },
-      });
+      if (query <= latestBlockHeight.value) {
+        router.push({
+          name: "BlockOverview",
+          params: {
+            height: query,
+          },
+        });
+      }
+      setHasError("Please enter valid address, transaction or Block ID.");
     };
 
     return {
       search,
       query,
-      isQueryEmpty,
+      hasError,
+      errorMessage,
     };
   },
 };
