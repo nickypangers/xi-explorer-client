@@ -1,6 +1,5 @@
 <template>
   <div class="w-full">
-    <p class="mb-2">{{ title }}</p>
     <table class="table-fixed w-full">
       <thead class="hidden md:table-header-group">
         <tr>
@@ -49,10 +48,6 @@ import { onMounted } from "vue";
 export default {
   name: "BlockTransactionsTable",
   props: {
-    title: {
-      type: String,
-      default: "",
-    },
     list: {
       type: Array,
       default: () => [],

@@ -15,14 +15,19 @@
       <p>{{ title }}</p>
     </div>
     <div class="col-span-1 md:col-span-3 truncate overflow-ellipsis">
-      <p v-if="!isLink" class="truncate overflow-ellipsis text-gray-500">
-        {{ content }}
-      </p>
-      <a class="link" v-if="isLink" @click="onLinkClick">{{ content }}</a>
+      <template v-if="hasData">
+        <p v-if="!isLink" class="truncate overflow-ellipsis text-gray-500">
+          {{ content }}
+        </p>
+        <a class="link" v-if="isLink" @click="onLinkClick">{{ content }}</a>
+      </template>
+      <!-- <div v-if="!hasData" class="h-full bg-black w-full">&nbsp;</div> -->
+      <text-loading-pulse v-if="!hasData" />
     </div>
   </div>
 </template>
 <script>
+import TextLoadingPulse from "@/components/TextLoadingPulse.vue";
 export default {
   name: "OverviewTile",
   props: {
@@ -38,8 +43,15 @@ export default {
       type: Boolean,
       default: false,
     },
+    hasData: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: ["linkClick"],
+  components: {
+    TextLoadingPulse,
+  },
   setup(_, { emit }) {
     const onLinkClick = () => {
       emit("linkClick");

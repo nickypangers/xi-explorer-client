@@ -6,7 +6,7 @@
       <search />
     </div>
     <!-- End Search Row -->
-    <router-view />
+    <router-view :key="route.fullPath" />
   </div>
 </template>
 
@@ -15,6 +15,7 @@ import NavBar from "@/components/NavBar.vue";
 import Search from "@/components/Search.vue";
 import { onMounted } from "vue";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 export default {
   name: "App",
   components: {
@@ -22,6 +23,7 @@ export default {
     Search,
   },
   setup() {
+    const route = useRoute();
     const store = useStore();
     const updateChainInfo = () => {
       store.dispatch("updateChainInfo");
@@ -35,6 +37,10 @@ export default {
         updateChainInfo();
       }, 1000 * 60);
     });
+
+    return {
+      route,
+    };
   },
 };
 </script>

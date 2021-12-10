@@ -23,6 +23,7 @@
 <script>
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { goToAddress } from "@/common/router";
 export default {
   name: "WalletListTable",
   props: {
@@ -42,6 +43,7 @@ export default {
 
     return {
       getPercentage,
+      goToAddress,
     };
   },
 };

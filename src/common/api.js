@@ -37,7 +37,7 @@ const getWalletAtPage = async (page, limit) => {
 };
 
 const getAddressInfo = async (address) => {
-  const response = await axios.get(`/wallet/${address}`);
+  const response = await axios.post(`/wallet/`, { address });
   return response.data;
 };
 

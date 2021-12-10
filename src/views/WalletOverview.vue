@@ -3,15 +3,20 @@
     <div>
       <p class="mb-2">Wallet Overview</p>
       <overview-tile title="Address" :content="address" />
-      <overview-tile title="Balance" :content="`${balance} XI`" />
-      <overview-tile title="Nonce" :content="`${nonce}`" />
+      <overview-tile
+        title="Balance"
+        :content="`${balance} XI`"
+        :has-data="hasData"
+      />
+      <overview-tile title="Nonce" :content="`${nonce}`" :has-data="hasData" />
     </div>
     <div></div>
     <div class="md:col-span-2">
-      <transactions-table
-        title="Last 10 Blocks Transactions"
-        :list="transactionList"
-      />
+      <p class="mb-2">Last 10 Blocks Transactions</p>
+      <transactions-table :list="transactionList" v-if="hasData" />
+      <div v-if="!hasData" class="h-96 w-full">
+        <text-loading-pulse />
+      </div>
     </div>
   </div>
 </template>
@@ -21,15 +26,18 @@ import OverviewTile from "@/components/OverviewTile.vue";
 import { ref, onMounted, computed, watch } from "vue";
 import { getAddressInfo } from "@/common/api";
 import TransactionsTable from "@/components/TransactionsTable.vue";
+import TextLoadingPulse from "../components/TextLoadingPulse.vue";
 export default {
   name: "WalletOverview",
   components: {
     OverviewTile,
     TransactionsTable,
+    TextLoadingPulse,
   },
   setup() {
     const route = useRoute();
     const addressInfo = ref({});
+    const hasData = ref(false);
 
     const address = computed(() => route.params.address);
     const balance = computed(() => addressInfo.value.balance ?? 0);
@@ -40,6 +48,14 @@ export default {
 
     const clearAddressData = () => {
       addressInfo.value = {};
+    };
+
+    const getAddressInfoData = (address) => {
+      hasData.value = false;
+      getAddressInfo(address).then((data) => {
+        addressInfo.value = data;
+        hasData.value = true;
+      });
     };
 
     watch(
@@ -55,14 +71,16 @@ export default {
 
         clearAddressData();
 
-        addressInfo.value = await getAddressInfo(toParams.address);
+        // addressInfo.value = await getAddressInfo(toParams.address);
+        getAddressInfoData(toParams.address);
       }
     );
 
     onMounted(() => {
-      getAddressInfo(route.params.address).then(
-        (data) => (addressInfo.value = data)
-      );
+      // getAddressInfo(route.params.address).then(
+      //   (data) => (addressInfo.value = data)
+      // );
+      getAddressInfoData(route.params.address);
     });
 
     return {
@@ -72,6 +90,7 @@ export default {
       balance,
       nonce,
       transactionList,
+      hasData,
     };
   },
 };

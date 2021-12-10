@@ -3,32 +3,44 @@
     <div>
       <p class="mb-2">Transaction Overview</p>
       <overview-tile title="Transaction Hash" :content="transactionHash" />
-      <overview-tile title="Timestamp" :content="timestamp" />
+      <overview-tile
+        title="Timestamp"
+        :content="timestamp"
+        :has-data="hasData"
+      />
       <overview-tile
         title="Block"
         :content="blockHeight"
-        @link-click="goToBlock(blockHeight)"
         :is-link="true"
+        :has-data="hasData"
+        @link-click="goToBlock(blockHeight)"
       />
       <overview-tile
         title="From"
         :content="from"
-        @link-click="goToAddress(from)"
         :is-link="true"
+        :has-data="hasData"
+        @link-click="goToAddress(from)"
       />
       <overview-tile
         title="To"
         :content="to"
-        @link-click="goToAddress(to)"
         :is-link="true"
+        :has-data="hasData"
+        @link-click="goToAddress(to)"
       />
-      <overview-tile title="Memo" :content="memo" />
-      <overview-tile title="Amount" :content="`${amount} XI`" />
+      <overview-tile title="Memo" :content="memo" :has-data="hasData" />
+      <overview-tile
+        title="Amount"
+        :content="`${amount} XI`"
+        :has-data="hasData"
+      />
     </div>
     <div>
       <p class="mb-2">Raw Data</p>
       <div class="w-full rounded bg-white text-sm p-3 break-words">
-        <pre class="whitespace-pre-wrap">{{ transaction }}</pre>
+        <pre class="whitespace-pre-wrap" v-if="hasData">{{ transaction }}</pre>
+        <text-loading-pulse v-if="!hasData" />
       </div>
     </div>
   </div>
@@ -40,16 +52,19 @@ import { ref, computed, onMounted } from "vue";
 import { getTransactionInfo } from "@/common/api";
 import { timestampToDate } from "@/common/date";
 import { goToBlock, goToAddress } from "@/common/router";
+import TextLoadingPulse from "../components/TextLoadingPulse.vue";
 export default {
   name: "TransactionOverview",
   components: {
     OverviewTile,
+    TextLoadingPulse,
   },
   setup() {
     const route = useRoute();
     const transactionHash = computed(() => route.params.hash);
     const blockHeight = computed(() => route.params.height);
     const transaction = ref({});
+    const hasData = ref(false);
     const from = computed(() => transaction.value.from ?? "");
     const to = computed(() => transaction.value.to ?? "");
     const amount = computed(() => transaction.value.amount ?? 0);
@@ -65,6 +80,8 @@ export default {
         blockHeight.value,
         transactionHash.value
       );
+
+      hasData.value = true;
     });
 
     return {
@@ -79,6 +96,7 @@ export default {
       timestamp,
       goToBlock,
       goToAddress,
+      hasData,
     };
   },
 };
