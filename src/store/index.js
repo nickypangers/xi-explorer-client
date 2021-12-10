@@ -16,6 +16,7 @@ const store = createStore({
       circulatingSupply: 0,
       searchHasError: false,
       searchErrorMessage: "",
+      query: "",
     };
   },
   getters: {
@@ -44,6 +45,9 @@ const store = createStore({
     },
     setSearchErrorMessage(state, message) {
       state.searchErrorMessage = message;
+    },
+    setQuery(state, query) {
+      state.query = query;
     },
   },
   actions: {

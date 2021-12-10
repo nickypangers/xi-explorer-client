@@ -8,7 +8,7 @@ const getBlockInfo = async (height) => {
     .get(`/block/${height}`)
     .then((response) => {
       store.dispatch("clearSearchErrorMessage");
-      response.data;
+      return response.data;
     })
     .catch(() => {
       store.dispatch(
@@ -38,7 +38,7 @@ const getTransactionInfo = async (block, transactionHash) => {
     })
     .then((response) => {
       store.dispatch("clearSearchErrorMessage");
-      response.data;
+      return response.data;
     })
     .catch(() => {
       store.dispatch(
@@ -65,7 +65,7 @@ const getAddressInfo = async (address) => {
     .post(`/wallet/`, { address })
     .then((response) => {
       store.dispatch("clearSearchErrorMessage");
-      response.data;
+      return response.data;
     })
     .catch(() => {
       store.dispatch(

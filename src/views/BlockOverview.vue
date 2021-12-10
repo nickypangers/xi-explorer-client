@@ -91,6 +91,7 @@ export default {
     const getBlockInfoData = (height) => {
       hasData.value = false;
       getBlockInfo(height).then((data) => {
+        console.log(data);
         block.value = data;
         hasData.value = true;
       });

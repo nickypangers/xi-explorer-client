@@ -10,6 +10,7 @@ import TransactionOverview from "@/views/TransactionOverview.vue";
 import store from "@/store";
 
 const clearSearchError = (to, from, next) => {
+  store.commit("setQuery", "");
   store.dispatch("clearSearchErrorMessage");
   next();
 };
@@ -25,43 +26,43 @@ const routes = [
     path: "/blocks",
     name: "Blocks",
     component: Blocks,
-    // beforeEnter: clearSearchError,
+    beforeEnter: clearSearchError,
   },
   {
     path: "/transactions",
     name: "Transactions",
     component: Transactions,
-    // beforeEnter: clearSearchError,
+    beforeEnter: clearSearchError,
   },
   {
     path: "/wallets",
     name: "Wallets",
     component: Wallets,
-    // beforeEnter: clearSearchError,
+    beforeEnter: clearSearchError,
   },
   {
     path: "/blocks",
     name: "Blocks",
     component: Blocks,
-    // beforeEnter: clearSearchError,
+    beforeEnter: clearSearchError,
   },
   {
     path: "/block/:height",
     name: "BlockOverview",
     component: BlockOverview,
-    // beforeEnter: clearSearchError,
+    beforeEnter: clearSearchError,
   },
   {
     path: "/block/:height/transaction/:hash",
     name: "TransactionOverview",
     component: TransactionOverview,
-    // beforeEnter: clearSearchError,
+    beforeEnter: clearSearchError,
   },
   {
     path: "/address/:address",
     name: "WalletOverview",
     component: WalletOverview,
-    // beforeEnter: clearSearchError,
+    beforeEnter: clearSearchError,
   },
   {
     path: "/404",

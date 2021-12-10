@@ -29,7 +29,14 @@ export default {
   setup() {
     const router = useRouter();
     const store = useStore();
-    const query = ref("");
+    const query = computed({
+      get: () => {
+        return store.state.query;
+      },
+      set: (val) => {
+        store.commit("setQuery", val);
+      },
+    });
     const hasError = computed(() => store.state.searchHasError);
     const errorMessage = computed(() => store.state.searchErrorMessage);
 
